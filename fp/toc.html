@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TOC & Privacy — Explore</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#9333ea;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071027 0%, #021026 100%);color:#e6eef8}
+    header{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
+    nav{display:flex;gap:12px}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;cursor:pointer;color:#e6eef8}
+    .container{display:grid;grid-template-columns:320px 1fr;gap:22px;padding:28px}
+    .sidebar{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px;min-height:60vh}
+    .search{display:flex;margin-bottom:12px}
+    input[type=text]{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .modules{margin-top:8px}
+    .module{padding:10px;border-radius:8px;margin-bottom:8px;cursor:pointer}
+    .module:hover{background:rgba(255,255,255,0.02)}
+    main{padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;min-height:60vh}
+    h1,h2,h3{color:#e6f0ff}
+    .card{background:var(--card);padding:16px;border-radius:10px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.02)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+    footer{padding:18px;text-align:center;color:var(--muted)}
+    pre{white-space:pre-wrap}
+    @media(max-width:880px){.container{grid-template-columns:1fr;}.sidebar{order:2}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">TOC</div>
+      <div>
+        <div style="font-weight:700">TOC & Privacy Explorer</div>
+        <div style="font-size:12px;color:var(--muted)">Complete textbook content from WordPad file</div>
+      </div>
+    </div>
+    <nav>
+      <button class="btn" onclick="printPage()">Print</button>
+      <button class="btn" onclick="downloadHTML()">Download HTML</button>
+      <button class="btn" id="openExplore">Explore</button>
+    </nav>
+  </header>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="search">
+        <input id="searchBox" type="text" placeholder="Search section..." oninput="searchSections()" />
+      </div>
+      <div class="modules">
+        <div class="module" onclick="goTo('ch1')">Chapter 1: Introduction</div>
+        <div class="module" onclick="goTo('ch2')">Chapter 2: Automata and Privacy</div>
+        <div class="module" onclick="goTo('ch3')">Chapter 3: Algorithms in Encryption</div>
+        <div class="module" onclick="goTo('ch4')">Chapter 4: Complexity and Security</div>
+        <div class="module" onclick="goTo('ch5')">Chapter 5: TOC + Privacy Combined</div>
+        <div class="module" onclick="goTo('ch6')">Chapter 6: Preventing Compromise</div>
+        <div class="module" onclick="goTo('ch7')">Chapter 7: Conclusion + Exercises</div>
+      </div>
+    </aside>
+    <main id="content">
+      <section id="ch1" class="card">
+        <h1>Chapter 1: Introduction</h1>
+        <h3>1.1 Privacy in Computing</h3>
+        <p>Privacy refers to keeping sensitive information safe from unauthorized access. Data such as financial transactions, personal records, and medical information must be secured.</p>
+        <h3>1.2 Role of TOC in Secure Systems</h3>
+        <p>TOC explores what can be computed, efficiency, and limits. Its role in privacy includes:</p>
+        <ul>
+          <li>Automata → modeling and enforcing rules in protocols.</li>
+          <li>Algorithms → encryption, hashing.</li>
+          <li>Complexity → ensuring breaking security is infeasible.</li>
+        </ul>
+        <h3>1.3 Encryption as a TOC Application</h3>
+        <p>Encryption schemes are algorithms running on Turing Machines. Security relies on computational complexity (e.g., RSA based on integer factorization).</p>
+      </section>
+
+      <section id="ch2" class="card">
+        <h1>Chapter 2: Automata and Privacy</h1>
+        <h3>2.1 Definition of Automata</h3>
+        <p>Abstract machines with states, transitions, alphabet, start, and accept states.</p>
+        <h3>2.2 Finite Automata (FA) and Privacy</h3>
+        <p>Finite states, pattern matching, used in firewalls, regex, spam filters.</p>
+        <table>
+          <tr><th>Feature</th><th>Finite Automata in Privacy</th></tr>
+          <tr><td>Memory</td><td>No memory beyond current state</td></tr>
+          <tr><td>Security Role</td><td>Detects malicious patterns</td></tr>
+          <tr><td>Applications</td><td>Firewalls, Spam filters, Regex</td></tr>
+        </table>
+        <h3>2.3 Pushdown Automata (PDA) and Privacy</h3>
+        <p>Stack-based memory, parses secure protocols (SSL/TLS), validates certificates.</p>
+        <h3>2.4 Turing Machines (TM) and Privacy</h3>
+        <p>Universal computation, models encryption, hardness assumptions (RSA, ECC).</p>
+        <table>
+          <tr><th>Automaton</th><th>Characteristics</th><th>Role in Privacy</th><th>Applications</th></tr>
+          <tr><td>FA</td><td>No memory beyond state</td><td>Detect malicious patterns</td><td>Firewalls</td></tr>
+          <tr><td>PDA</td><td>Stack-based memory</td><td>Parses secure protocols</td><td>SSL/TLS validation</td></tr>
+          <tr><td>TM</td><td>Universal</td><td>Models encryption</td><td>RSA, ECC</td></tr>
+        </table>
+      </section>
+
+      <section id="ch3" class="card">
+        <h1>Chapter 3: Algorithms in Encryption and Data Security</h1>
+        <h3>3.1 Definition</h3>
+        <p>Algorithms are step-by-step procedures, crucial for encryption, hashing, digital signatures.</p>
+        <h3>3.2 Encryption Algorithms</h3>
+        <p><strong>Symmetric:</strong> AES, DES. Same key used for encryption and decryption.</p>
+        <p><strong>Asymmetric:</strong> RSA, ECC. Public/private key pairs.</p>
+        <h3>3.3 Hashing Algorithms</h3>
+        <p>SHA-256, MD5. One-way functions ensuring integrity and authentication.</p>
+        <h3>3.4 Privacy-Preserving Algorithms</h3>
+        <ul>
+          <li>Homomorphic Encryption → compute on encrypted data.</li>
+          <li>Zero-Knowledge Proofs → prove knowledge without revealing.</li>
+          <li>Differential Privacy → add noise to datasets.</li>
+        </ul>
+        <h3>3.5 Applications</h3>
+        <table>
+          <tr><th>Algorithm</th><th>Role</th><th>Applications</th></tr>
+          <tr><td>Symmetric</td><td>Fast bulk encryption</td><td>Banking, Wi-Fi</td></tr>
+          <tr><td>Asymmetric</td><td>Secure key exchange</td><td>Email, SSL</td></tr>
+          <tr><td>Hashing</td><td>Integrity, authentication</td><td>Blockchain, passwords</td></tr>
+          <tr><td>Privacy-Preserving</td><td>Compute securely</td><td>Cloud, voting</td></tr>
+        </table>
+      </section>
+
+      <section id="ch4" class="card">
+        <h1>Chapter 4: Computational Complexity and Security</h1>
+        <h3>4.1 Definition</h3>
+        <p>Study of resources (time, memory) needed to solve problems.</p>
+        <h3>4.2 Complexity Classes</h3>
+        <p>P, NP, NP-Complete, NP-Hard. P vs NP remains unsolved.</p>
+        <h3>4.3 Hard Problems</h3>
+        <p>Integer Factorization → RSA. Discrete Logarithm → ECC. Lattice Problems → Post-Quantum.</p>
+        <h3>4.4 Security Principles</h3>
+        <p>Brute force infeasible. AES-256 safe. Quantum computing threatens RSA/ECC (Shor’s algorithm).</p>
+        <h3>4.5 Applications</h3>
+        <table>
+          <tr><th>Problem</th><th>Use</th><th>Strength</th></tr>
+          <tr><td>Factorization</td><td>RSA</td><td>Strong until quantum</td></tr>
+          <tr><td>Discrete Log</td><td>ECC</td><td>Efficient</td></tr>
+          <tr><td>Lattice</td><td>Post-quantum</td><td>Resistant to quantum</td></tr>
+        </table>
+      </section>
+
+      <section id="ch5" class="card">
+        <h1>Chapter 5: TOC and Privacy Combined</h1>
+        <p>Integration of automata, algorithms, complexity.</p>
+        <table>
+          <tr><th>Concept</th><th>Organization</th><th>Security Role</th><th>Applications</th></tr>
+          <tr><td>Automata</td><td>States & transitions</td><td>Detect, validate</td><td>Firewalls, SSL</td></tr>
+          <tr><td>Algorithms</td><td>Step-by-step</td><td>Encrypt, hash</td><td>AES, RSA</td></tr>
+          <tr><td>Complexity</td><td>Hard problems</td><td>Infeasible to break</td><td>RSA, ECC</td></tr>
+        </table>
+        <h3>Case Studies</h3>
+        <ul>
+          <li>Firewalls with Automata</li>
+          <li>Banking Transactions with RSA</li>
+          <li>Blockchain with Hashing + Merkle Trees</li>
+        </ul>
+      </section>
+
+      <section id="ch6" class="card">
+        <h1>Chapter 6: Preventing Security Compromise</h1>
+        <h3>6.1 Automata Prevent Attacks</h3>
+        <p>FA detect repeated logins, PDA validate certificates, TM verify systems.</p>
+        <h3>6.2 Algorithms Ensure Confidentiality</h3>
+        <table>
+          <tr><th>Algorithm</th><th>Attack Prevented</th><th>How</th></tr>
+          <tr><td>AES</td><td>Data theft</td><td>Unreadable without key</td></tr>
+          <tr><td>RSA</td><td>MitM attacks</td><td>Public/private key</td></tr>
+          <tr><td>Hash</td><td>Tampering</td><td>Any change alters digest</td></tr>
+        </table>
+        <h3>6.3 Complexity</h3>
+        <p>Brute force infeasible (2^256). Post-quantum solutions needed.</p>
+        <h3>6.4 Applications</h3>
+        <p>E-commerce, healthcare, social media.</p>
+      </section>
+
+      <section id="ch7" class="card">
+        <h1>Chapter 7: Conclusion + Exercises</h1>
+        <h3>7.1 Conclusion</h3>
+        <p>TOC underpins privacy: automata detect, algorithms secure, complexity protects. Essential for firewalls, banking, blockchain, PQC.</p>
+        <h3>7.2 Future Directions</h3>
+        <p>Post-quantum cryptography, AI-driven anomaly detection, Privacy by Design.</p>
+        <h3>Exercises</h3>
+        <ol>
+          <li>Explain how finite automata are used in intrusion detection.</li>
+          <li>Compare symmetric and asymmetric encryption with examples.</li>
+          <li>Why is hashing considered a one-way function?</li>
+          <li>How does computational complexity protect encryption?</li>
+          <li>Research Shor’s Algorithm. Why is it a threat to RSA?</li>
+          <li>How can lattice-based cryptography protect against quantum attacks?</li>
+          <li>Design an automaton for secure password rules.</li>
+        </ol>
+      </section>
+
+      <section id="explorePage" class="card" style="display:none">
+        <h2>Explore — Interactive View</h2>
+        <p>Quick navigation to key concepts:</p>
+        <button class="btn" onclick="goTo('ch2')">Automata</button>
+        <button class="btn" onclick="goTo('ch3')">Algorithms</button>
+        <button class="btn" onclick="goTo('ch4')">Complexity</button>
+        <button class="btn" onclick="goTo('ch6')">Applications</button>
+      </section>
+
+    </main>
+  </div>
+  <footer>Built from uploaded WordPad textbook. All chapters included.</footer>
+
+  <script>
+    function goTo(id){document.querySelectorAll('main section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+    document.addEventListener('DOMContentLoaded',()=>{goTo('ch1');});
+    function searchSections(){const q=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('main section').forEach(s=>{const text=s.innerText.toLowerCase();s.style.display = q === '' ? 'none' : (text.includes(q)?'block':'none');});}
+    function printPage(){window.print();}
+    function downloadHTML(){const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='TOC_and_Privacy_explore.html';a.click();}
+    document.getElementById('openExplore').addEventListener('click',()=>{document.querySelectorAll('main section').forEach(s=>s.style.display='none');document.getElementById('explorePage').style.display='block';});
+  </script>
+</body>
+</html>

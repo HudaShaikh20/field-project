@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up - Data Privacy Awareness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-600 to-blue-600 min-h-screen flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Create Your Account</h2>
+    <form action="/signup" method="POST" class="space-y-6">
+      <div>
+        <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          placeholder="Choose a username"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+      <div>
+        <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="********"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-purple-600 text-white font-semibold py-3 rounded-md hover:bg-purple-700 transition"
+      >
+        Sign Up
+      </button>
+    </form>
+    <p class="mt-6 text-center text-gray-600">
+      Already have an account?
+      <a href="login.html" class="text-purple-600 hover:underline font-semibold">Log In</a>
+    </p>
+  </div>
+
+  <!-- ✅ Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector("form");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Save login state in sessionStorage
+        sessionStorage.setItem("loggedIn", "true");
+
+        // Redirect to home page
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

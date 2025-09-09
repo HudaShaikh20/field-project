@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Privacy Awareness Survey</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .hero-bg {
+      background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/22402e34-3863-4c21-b2af-957aca826b88.png') no-repeat center center;
+      background-size: cover;
+      height: 60vh;
+    }
+    .quiz-option { transition: background-color 0.3s; }
+    .quiz-option:hover { background-color: #e2e8f0; }
+    .quiz-result { display: none; }
+    .tab-content { display: none; }
+    .tab-active { display: block; }
+  </style>
+</head>
+<body class="text-gray-900">
+  <!-- Header -->
+  <header class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Data Privacy Awareness</h1>
+      <ul class="flex space-x-6">
+        <li><a href="#intro" class="text-gray-700 hover:text-blue-600">Home</a></li>
+        <li><a href="#survey" class="text-gray-700 hover:text-blue-600">Survey</a></li>
+        <li><a href="#modules" class="text-gray-700 hover:text-blue-600">Modules</a></li>
+        <li><a href="#resources" class="text-gray-700 hover:text-blue-600">Resources</a></li>
+        <li><a href="login.html" class="text-gray-700 hover:text-blue-600">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="intro" class="hero-bg flex items-center justify-center text-white">
+    <div class="text-center p-8">
+      <h2 class="text-4xl font-bold mb-4">Assess Your Data Privacy Knowledge</h2>
+      <p class="text-xl mb-6">Explore how Data Structures, Theory of Computation, and Operating Systems impact your digital privacy.</p>
+      <a href="quiz.html" class="bg-blue-600 px-8 py-3 rounded-full text-white font-semibold hover:bg-blue-700 transition">Start Survey</a>
+    </div>
+  </section>
+
+
+
+
+  <!-- Modules -->
+  <section id="modules" class="bg-gray-100 py-12">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-8">Educational Modules</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b2137a18-219c-4749-8514-b55bbdd4935b.png" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold mb-2">Data Structures & Privacy</h3>
+          <p>Learn how trees, graphs, and hash tables ensure secure data organization and prevent breaches.</p>
+          <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="window.location.href='ds.html'">Explore Module</button>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e1d3f9c8-1ecb-44f5-9d8d-0a1c7e2fe5e3.png" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold mb-2">Theory of Computation & Privacy</h3>
+          <p>Understand automata, algorithms, and computational complexity in encryption and data security.</p>
+                    <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="window.location.href='toc.html'">Explore Module</button>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/948c5e75-3a4e-4cbc-ac62-44f19bcf3bce.png" class="w-full h-48 object-cover rounded mb-4">
+          <h3 class="text-xl font-semibold mb-2">Operating Systems & Privacy</h3>
+          <p>Dive into permissions, sandboxing, and kernel-level protections for user data.</p>
+          <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="window.location.href='os.html'">Explore Module</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- About Us -->
+  <section id="about" class="bg-white py-16">
+    <div class="container mx-auto px-6 max-w-4xl text-center">
+      <h2 class="text-4xl font-bold mb-10 text-indigo-700">📌 About Us</h2>
+      <div class="text-left space-y-6 text-gray-700 leading-relaxed">
+        <div>
+          <h3 class="text-2xl font-semibold text-indigo-600">Who We Are</h3>
+          <p>
+            We are a student-led initiative focused on raising awareness about data privacy among young adults.
+            In today’s digital age, personal information is constantly at risk—from social media sharing to online transactions.
+            Our mission is to help individuals understand the value of their digital identity and learn how to protect it.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-2xl font-semibold text-indigo-600">Why This Project?</h3>
+          <p>
+            Young adults are some of the most active internet users, yet many are unaware of how their data is collected,
+            stored, and shared. This project combines a survey, educational modules, and interactive quizzes
+            to measure awareness levels and promote better privacy practices.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-2xl font-semibold text-indigo-600">Our Mission</h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>Assess young adults’ knowledge of data privacy.</li>
+            <li>Provide engaging and easy-to-understand learning resources.</li>
+            <li>Encourage safe online behavior and informed decision-making.</li>
+            <li>Build a community that values and protects digital rights.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-2xl font-semibold text-indigo-600">What You’ll Find Here</h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>A Privacy Awareness Survey to test your knowledge.</li>
+            <li>Learning Modules on how Data Structures, Theory of Computation, and Operating Systems connect to privacy.</li>
+            <li>Resources & Tools to help you safeguard your digital life.</li>
+          </ul>
+        </div>
+
+        <p class="mt-6 text-indigo-700 font-medium">
+          ✨ Together, let’s build a safer, more privacy-conscious digital future.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Resources -->
+  <section id="resources" class="bg-white py-12">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-8">Additional Resources</h2>
+      <div class="flex justify-center space-x-8">
+        <a href="#" class="text-blue-600 hover:underline">Privacy Tools Guide</a>
+        <a href="#" class="text-blue-600 hover:underline">Case Studies on Breaches</a>
+        <a href="#" class="text-blue-600 hover:underline">Best Practices Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-6 text-center">
+      <p>© 2023 Data Privacy Awareness Campaign. Built with education in mind.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Force login before interaction
+    function requireLogin(event) {
+      if (sessionStorage.getItem("loggedIn") !== "true") {
+        event.preventDefault();
+        window.location.href = "login.html";
+      }
+    }
+
+    // Apply to ALL clickable elements
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("a, button, .quiz-option, .tab-button").forEach(el => {
+        el.addEventListener("click", requireLogin);
+      });
+    });
+
+    // Tabs
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('tab-active', 'bg-blue-100', 'text-blue-600'));
+        tabButtons.forEach(btn => btn.classList.add('bg-gray-100', 'text-gray-600'));
+        button.classList.add('tab-active', 'bg-blue-100', 'text-blue-600');
+        button.classList.remove('bg-gray-100', 'text-gray-600');
+        const tabId = button.dataset.tab;
+        tabContents.forEach(content => {
+          content.classList.remove('tab-active');
+          if (content.id === tabId) {
+            content.classList.add('tab-active');
+          }
+        });
+      });
+    });
+
+    // Quiz
+    const quizOptions = document.querySelectorAll('.quiz-option');
+    const finishBtn = document.getElementById('finish-survey');
+    const resultsDiv = document.getElementById('results');
+    const scoreP = document.getElementById('score');
+    const adviceP = document.getElementById('advice');
+    let correctCount = 0;
+    let totalCount = 0;
+
+    quizOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        totalCount++;
+        quizOptions.forEach(opt => opt.style.pointerEvents = 'none');
+        if (option.dataset.answer === 'correct') {
+          correctCount++;
+          option.style.backgroundColor = '#d4edda';
+        } else {
+          option.style.backgroundColor = '#f8d7da';
+          const correctOpt = option.parentElement.querySelector('[data-answer="correct"]');
+          if (correctOpt) correctOpt.style.backgroundColor = '#d4edda';
+        }
+      });
+    });
+
+    finishBtn.addEventListener('click', () => {
+      scoreP.textContent = `Correct: ${correctCount} / Total: ${totalCount}`;
+      resultsDiv.style.display = 'block';
+      adviceP.textContent = correctCount > totalCount * 0.5
+        ? 'Excellent! You have strong privacy knowledge.'
+        : 'Keep learning about data privacy concepts.';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Challenge — OS / DS / TOC & Privacy</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#16a34a; --muted:#94a3b8; --glass:rgba(255,255,255,0.04);
+      --card-radius:14px; --gap:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#e6eef5;background:linear-gradient(180deg,#071029 0%, #0f1724 100%);min-height:100vh;display:flex;flex-direction:column}
+    header{padding:18px 20px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--glass);display:flex;align-items:center;gap:12px}
+    header h1{margin:0;font-size:18px;color:var(--accent)}
+    header p{margin:0;color:var(--muted);font-size:13px}
+
+    .app{display:flex;gap:var(--gap);padding:20px;flex:1;align-items:flex-start}
+    .sidebar{width:260px;background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass);min-height:360px}
+    .sidebar h2{color:var(--accent);margin:0 0 8px}
+    .subjects{display:flex;flex-direction:column;gap:8px}
+    .subject-btn{background:transparent;border:1px solid transparent;color:var(--muted);padding:10px;border-radius:10px;cursor:pointer;text-align:left}
+    .subject-btn.active{background:var(--glass);color:#fff;border-color:rgba(255,255,255,0.02)}
+    .levels{margin-top:14px}
+    .level-btn{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;margin-bottom:8px}
+    .level-btn.locked{opacity:0.5;cursor:not-allowed}
+    .level-btn.active{background:rgba(255,255,255,0.03);color:#fff}
+
+    .main{flex:1;display:flex;flex-direction:column}
+    .card{background:var(--card);padding:22px;border-radius:var(--card-radius);box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid var(--glass);max-width:900px;margin:0 auto}
+    .toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .meta{color:var(--muted);font-size:13px}
+
+    .progress-wrap{margin:14px 0}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#22c55e);width:0%}
+
+    .question-card{margin-top:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px}
+    .q-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .q-text{font-size:18px;margin:8px 0;color:#fff}
+    .options{display:grid;gap:10px}
+    .option{background:rgba(255,255,255,0.03);padding:12px;border-radius:10px;border:1px solid transparent;color:#e6eef5;cursor:pointer;text-align:left}
+    .option:hover{background:rgba(255,255,255,0.05)}
+    .option.selected{outline:2px solid rgba(255,255,255,0.06)}
+    .option.correct{background:rgba(22,163,74,0.9)}
+    .option.wrong{background:rgba(220,38,38,0.9)}
+
+    .controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px}
+    .btn{padding:10px 16px;border-radius:10px;border:none;cursor:pointer;background:var(--accent);color:#021014}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04)}
+    .btn[disabled]{opacity:0.5;cursor:not-allowed}
+
+    .footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+
+    .leaderboard{margin-top:16px;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+    .lb-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+
+    /* responsive */
+    @media (max-width:880px){.app{flex-direction:column;padding:14px}.sidebar{width:100%;order:2}.main{order:1}.card{max-width:100%}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Quiz Challenge</h1>
+    <p style="margin-left:12px">Beginner → Intermediate → Advanced — OS / DS / TOC & Privacy</p>
+  </header>
+
+  <div class="app">
+    <aside class="sidebar">
+      <h2>Subjects</h2>
+      <div class="subjects">
+        <button class="subject-btn active" data-id="quiz1">OS & Privacy</button>
+        <button class="subject-btn" data-id="quiz2">Data Structures & Privacy</button>
+        <button class="subject-btn" data-id="quiz3">TOC & Privacy</button>
+      </div>
+
+      <div class="levels">
+        <h3 style="color:var(--accent);margin:12px 0 8px">Levels</h3>
+        <div id="levelsList">
+          <div class="level-btn active" data-level="beginner">Beginner <small class="meta">(unlocked)</small></div>
+          <div class="level-btn locked" data-level="intermediate">Intermediate <small class="meta">(locked)</small></div>
+          <div class="level-btn locked" data-level="advanced">Advanced <small class="meta">(locked)</small></div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <label style="display:block;color:var(--muted);font-size:13px;margin-bottom:6px">Your name (for leaderboard)</label>
+        <input id="playerName" placeholder="Your name" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
+      </div>
+
+      <div class="leaderboard" id="leaderboard">
+        <strong style="color:var(--accent)">Leaderboard</strong>
+        <div id="lbContent" style="margin-top:8px;color:var(--muted)">No scores yet</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="card">
+        <div class="toprow">
+          <div>
+            <div id="title" style="font-weight:600;color:var(--accent)">OS & Privacy — Beginner</div>
+            <div class="meta" id="meta">Question <span id="qIndex">1</span> of <span id="qTotal">5</span></div>
+          </div>
+          <div class="meta">
+            <div>Level status: <span id="levelStatus">Unlocked</span></div>
+            <div style="margin-top:6px">Time left: <span id="timer">—</span></div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress"><i id="progressBar"></i></div>
+        </div>
+
+        <div class="question-card">
+          <div class="q-head"><div style="font-weight:600;color:var(--muted)" id="qSubject">OS & Privacy</div><div class="meta" id="difficulty">Beginner</div></div>
+          <div class="q-text" id="questionText">Loading...</div>
+          <div class="options" id="options"></div>
+
+          <div class="controls">
+            <div>
+              <button class="btn ghost" id="prevBtn">Previous</button>
+              <button class="btn ghost" id="skipBtn">Skip</button>
+            </div>
+            <div>
+              <button class="btn" id="nextBtn" disabled>Next Question</button>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="meta">Selected: <span id="selectedInfo">None</span></div>
+            <div class="meta">Score: <span id="scoreDisplay">0</span></div>
+          </div>
+        </div>
+
+        <div id="endCard" style="display:none;margin-top:14px;background:rgba(255,255,255,0.02);padding:18px;border-radius:10px">
+          <h3 style="margin:0 0 8px">Level Complete</h3>
+          <div class="meta">Your score: <strong id="finalScore">0</strong> / <span id="finalTotal">0</span> (<span id="finalPercent">0</span>%)</div>
+          <div style="margin-top:10px">
+            <button class="btn" id="saveScoreBtn">Save Score</button>
+            <button class="btn ghost" id="retryBtn">Retry Level</button>
+            <button class="btn ghost" id="nextLevelBtn">Proceed to Next Level</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Data (from user's provided questions)
+    const rawQuizzes = {
+      quiz1: { name: 'OS & Privacy', beginner: [
+        {q: "What is the primary role of an Operating System in privacy?", o:["Running games faster","Enforcing rules on apps and protecting data","Increasing internet speed","Allowing all apps free access"], a:1},
+        {q: "Which of the following is an example of a dangerous permission?", o:["Internet access","Camera access","Network state","Bluetooth connection"], a:1},
+        {q: "What does sandboxing do?", o:["Increases device storage","Isolates apps from each other to protect data","Deletes unused files","Encrypts all passwords"], a:1},
+        {q: "When you unlock your phone with a fingerprint, where does the OS store the fingerprint data?", o:["In cloud storage","In the gallery folder","In a secure enclave (protected hardware memory)","In the SMS backup"], a:2},
+        {q: "Which of the following is a suspicious permission request?", o:["Maps asking for location","WhatsApp asking for microphone","Flashlight app asking for contacts","Camera app asking for camera"], a:2}
+      ], intermediate:[
+        {q: "Which OS mechanism ensures that one app cannot read another app’s memory?", o:["File System","Virtual Memory","Encryption","Device Drivers"], a:1},
+        {q: "Which of the following is an example of sandboxing in browsers?", o:["User Account Control (UAC)","Each tab running in isolation","Encrypted Wi-Fi connections","Cloud backups"], a:1},
+        {q: "What is the purpose of kernel mode vs. user mode?", o:["To save battery power","To separate app permissions from system-level access","To improve display graphics","To allow multitasking"], a:1},
+        {q: "Which encryption tool is used on macOS?", o:["BitLocker","FileVault","SELinux","AppArmor"], a:1},
+        {q: "What happens when a device is rooted/jailbroken?", o:["It becomes faster","It disables sandboxing and kernel protections","It increases memory size","It improves camera quality"], a:1}
+      ], advanced:[
+        {q: "Which kernel security module is used in Linux for Mandatory Access Control (MAC)?", o:["FileVault","AppArmor","SELinux","BitLocker"], a:2},
+        {q: "What does an Access Control List (ACL) do?", o:["Encrypts all files","Defines fine-grained permissions for files and processes","Deletes unused system files","Tracks app usage"], a:1},
+        {q: "Which of the following best describes zero-day exploits?", o:["Hacks that exploit newly discovered OS vulnerabilities","Errors caused by wrong date settings","Outdated antivirus warnings","Accidental permission requests"], a:0},
+        {q: "In enterprise and cloud systems, sandboxing ensures that:", o:["Banking apps can share data with photo editors","Malware in one app cannot affect another app","Rooting is made safer","All apps run in kernel mode"], a:1},
+        {q: "The biggest challenge in OS privacy comes from:", o:["Faster processors","User negligence and over-permissioned apps","Stronger encryption methods","Improved sandboxing"], a:1}
+      ]},
+      quiz2: { name: 'Data Structures & Privacy', beginner:[
+        {q: "What is the main purpose of a data structure?", o:["To make computers look better","To organize and manage data efficiently","To increase internet speed","To remove viruses"], a:1},
+        {q: "Which of the following is a linear data structure?", o:["Graph","Tree","Stack","Hash table"], a:2},
+        {q: "Why are data structures important for privacy?", o:["They reduce battery consumption","They restrict unauthorized access and ensure secure organization","They increase screen resolution","They improve gaming graphics"], a:1},
+        {q: "A bank uses a hash table for storing passwords. How does this protect privacy?", o:["Passwords are stored as plain text","Passwords are stored as hashes, unreadable to outsiders","Passwords are hidden in files","Passwords are deleted after login"], a:1},
+        {q: "Which of the following is a non-linear data structure?", o:["Array","Queue","Linked List","Tree"], a:3}
+      ], intermediate:[
+        {q: "Which tree type helps detect tampering through hashing of nodes?", o:["Binary Search Tree","Merkle Tree","AVL Tree","Red-Black Tree"], a:1},
+        {q: "In graphs, edges with weights often represent:", o:["Color of nodes","Distance, cost, or capacity","Storage size","User password strength"], a:1},
+        {q: "Which data structure is most useful for access control inheritance?", o:["Stack","Queue","Tree","Array"], a:2},
+        {q: "Which privacy role does a graph data structure support?", o:["Relationship monitoring and anomaly detection","Data encryption","Memory management","File compression"], a:0},
+        {q: "What technique is used in hash tables to handle collisions?", o:["Recursion","Chaining","Backtracking","Hash reversal"], a:1}
+      ], advanced:[
+        {q: "If one byte of data changes in a Merkle tree, what happens?", o:["Nothing changes","The root hash changes, signaling tampering","Only leaf nodes are updated","Tree deletes itself"], a:1},
+        {q: "Which application relies heavily on graphs for detecting anomalous behavior?", o:["Social media likes","Network security systems","File storage","Digital signatures"], a:1},
+        {q: "Why are hash tables widely used in authentication systems?", o:["They improve graphics","They store hashed values, ensuring confidentiality","They encrypt entire databases","They run on kernel mode"], a:1},
+        {q: "Which combination correctly matches data structure with privacy role?", o:["Tree → Confidentiality","Graph → Anomaly Detection","Stack → Encryption","Queue → Hashing"], a:1},
+        {q: "The combined role of trees, graphs, and hash tables is to:", o:["Increase execution speed only","Provide privacy, secure data, and prevent breaches","Replace operating systems","Eliminate need for programming"], a:1}
+      ]},
+      quiz3: { name: 'TOC & Privacy', beginner:[
+        {q: "What does ‘privacy in computing’ mean?", o:["Speeding up internet browsing","Keeping sensitive data safe from unauthorized access","Saving storage space","Increasing battery life"], a:1},
+        {q: "Which branch of computer science asks ‘What can or cannot be computed?’", o:["Software Engineering","Theory of Computation (TOC)","Networking","Cyber Forensics"], a:1},
+        {q: "Which encryption algorithm relies on the difficulty of integer factorization?", o:["AES","RSA","SHA-256","ECC"], a:1},
+        {q: "Which automaton is used in firewalls and intrusion detection?", o:["Pushdown Automata","Finite Automata","Turing Machine","Context Automata"], a:1},
+        {q: "Hash functions are called one-way functions because:", o:["They are easy to reverse","They cannot be reversed to get original data","They save battery power","They always produce the same password"], a:1}
+      ], intermediate:[
+        {q: "A pushdown automaton (PDA) is useful in privacy because it:", o:["Detects patterns in data streams","Validates nested secure protocols like SSL/TLS","Encrypts passwords","Compresses files"], a:1},
+        {q: "Which of the following provides the strongest computational model?", o:["Finite Automata","Pushdown Automata","Turing Machine","Regex"], a:2},
+        {q: "In symmetric encryption, what is the main challenge?", o:["Slow processing","Secure key sharing between parties","Encrypting large data","Detecting malicious patterns"], a:1},
+        {q: "Which of the following is an example of privacy-preserving computation?", o:["Homomorphic Encryption","Sorting Algorithms","Binary Search Trees","Recursion"], a:0},
+        {q: "Which encryption method is faster and widely used in banking?", o:["ECC","RSA","AES","DES"], a:2}
+      ], advanced:[
+        {q: "Which complexity class represents problems that can be verified quickly but not necessarily solved quickly?", o:["P","NP","NP-Complete","NP-Hard"], a:1},
+        {q: "Which hard problem forms the basis of Elliptic Curve Cryptography (ECC)?", o:["Integer Factorization","Lattice Problems","Discrete Logarithm Problem","Sorting Problem"], a:2},
+        {q: "Why is Shor’s Algorithm a threat to RSA encryption?", o:["It speeds up data compression","It can efficiently factor large numbers using quantum computers","It improves brute-force attacks","It reduces storage cost"], a:1},
+        {q: "Which TOC concept ensures that encryption remains unbreakable within feasible time?", o:["Automata","Algorithms","Computational Complexity","Data Structures"], a:2},
+        {q: "The combined role of Automata + Algorithms + Complexity in privacy is to:", o:["Speed up gaming applications","Build secure systems that detect, encrypt, and resist attacks","Replace programming languages","Eliminate need for passwords"], a:1}
+      ]}
+    };
+
+    // app state
+    let currentQuizId = 'quiz1';
+    let currentLevel = 'beginner';
+    let currentSet = [];
+    let qOrder = [];
+    let qIndex = 0;
+    let selected = null;
+    let score = 0;
+    let timerInterval = null;
+    let timeLeft = 0;
+
+    const PASS_PERCENT = 60; // percentage to unlock next level
+
+    // DOM
+    const subjectBtns = document.querySelectorAll('.subject-btn');
+    const levelBtns = Array.from(document.querySelectorAll('.level-btn'));
+    const title = document.getElementById('title');
+    const qSubject = document.getElementById('qSubject');
+    const difficulty = document.getElementById('difficulty');
+    const questionText = document.getElementById('questionText');
+    const optionsWrap = document.getElementById('options');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const qIndexEl = document.getElementById('qIndex');
+    const qTotalEl = document.getElementById('qTotal');
+    const progressBar = document.getElementById('progressBar');
+    const selectedInfo = document.getElementById('selectedInfo');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const timerEl = document.getElementById('timer');
+
+    const endCard = document.getElementById('endCard');
+    const finalScore = document.getElementById('finalScore');
+    const finalTotal = document.getElementById('finalTotal');
+    const finalPercent = document.getElementById('finalPercent');
+    const saveScoreBtn = document.getElementById('saveScoreBtn');
+    const retryBtn = document.getElementById('retryBtn');
+    const nextLevelBtn = document.getElementById('nextLevelBtn');
+
+    const playerNameInput = document.getElementById('playerName');
+    const lbContent = document.getElementById('lbContent');
+
+    // utilities
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+      return a;
+    }
+
+    function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+    // levels: mapping for timer by difficulty (seconds)
+    const levelTimers = { beginner:60, intermediate:45, advanced:30 };
+
+    // load leaderboard from localStorage
+    function loadLeaderboard(){
+      const raw = localStorage.getItem('quiz_leaderboard');
+      let data = raw ? JSON.parse(raw) : {};
+      return data;
+    }
+    function saveLeaderboard(obj){
+      localStorage.setItem('quiz_leaderboard', JSON.stringify(obj));
+    }
+
+    function renderLeaderboard(){
+      const lb = loadLeaderboard();
+      const key = `${currentQuizId}_${currentLevel}`;
+      const arr = lb[key] || [];
+      if(arr.length===0){ lbContent.innerHTML = '<div style="color:var(--muted)">No scores yet</div>'; return }
+      lbContent.innerHTML = '';
+      arr.slice(0,10).forEach(r=>{
+        const div = document.createElement('div'); div.className='lb-row';
+        div.innerHTML = `<div style="color:#fff">${r.name}</div><div style="color:var(--muted)">${r.score}%</div>`;
+        lbContent.appendChild(div);
+      });
+    }
+
+    // UI actions
+    subjectBtns.forEach(btn=>btn.addEventListener('click',()=>{
+      subjectBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentQuizId = btn.dataset.id;
+      // reset to beginner when switching subject
+      currentLevel = 'beginner';
+      // ensure level buttons unlocked according to progress
+      applyUnlocks();
+      startLevel();
+      renderLeaderboard();
+    }));
+
+    levelBtns.forEach(btn=>btn.addEventListener('click',()=>{
+      if(btn.classList.contains('locked')) return;
+      levelBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentLevel = btn.dataset.level;
+      startLevel();
+      renderLeaderboard();
+    }));
+
+    nextBtn.addEventListener('click',()=>{
+      // if answer selected, evaluate
+      if(selected!==null){
+        checkAndMark(selected);
+      }
+      // move forward
+      qIndex++;
+      if(qIndex>=currentSet.length){
+        finishLevel();
+      } else {
+        renderQuestion();
+      }
+    });
+
+    prevBtn.addEventListener('click',()=>{
+      if(qIndex>0){ qIndex--; renderQuestion(); }
+    });
+    skipBtn.addEventListener('click',()=>{ // skip counts as incorrect but move on
+      selected = null; nextBtn.disabled = false; // allow moving
+      // mark nothing and move forward
+      checkAndMark(null);
+      qIndex++; if(qIndex>=currentSet.length) finishLevel(); else renderQuestion();
+    });
+
+    saveScoreBtn.addEventListener('click',()=>{
+      const name = (playerNameInput.value || 'Anonymous').trim();
+      const percent = Math.round((score/currentSet.length)*100);
+      const key = `${currentQuizId}_${currentLevel}`;
+      const lb = loadLeaderboard(); if(!lb[key]) lb[key]=[];
+      lb[key].push({name,score:percent,t:Date.now()});
+      // sort descending
+      lb[key].sort((a,b)=>b.score-a.score);
+      saveLeaderboard(lb);
+      renderLeaderboard();
+      alert('Score saved to leaderboard');
+    });
+
+    retryBtn.addEventListener('click',()=>{ startLevel(); });
+    nextLevelBtn.addEventListener('click',()=>{
+      if(currentLevel==='beginner') currentLevel='intermediate'; else if(currentLevel==='intermediate') currentLevel='advanced';
+      applyUnlocks();
+      startLevel();
+      renderLeaderboard();
+    });
+
+    // check answer and mark UI
+    function checkAndMark(selectedIndex){
+      clearTimer();
+      const q = currentSet[qIndex];
+      const options = optionsWrap.querySelectorAll('.option');
+      options.forEach((opt,idx)=>{
+        opt.classList.remove('selected');
+        opt.classList.remove('correct');
+        opt.classList.remove('wrong');
+        opt.style.pointerEvents='none';
+        if(q.a===idx){ opt.classList.add('correct'); }
+      });
+      if(selectedIndex===q.a){ score++; scoreDisplay.textContent = score; }
+      else if(selectedIndex===null){ /* skipped */ }
+      else {
+        // mark selected wrong
+        if(options[selectedIndex]) options[selectedIndex].classList.add('wrong');
+      }
+      selected = null;
+      nextBtn.disabled = false; // allow next
+    }
+
+    function renderQuestion(){
+      // reset
+      selected = null; selectedInfo.textContent='None'; nextBtn.disabled = true;
+      const q = currentSet[qIndex];
+      qIndexEl.textContent = qIndex+1; qTotalEl.textContent = currentSet.length;
+      questionText.textContent = q.q;
+      optionsWrap.innerHTML = '';
+      q.o.forEach((opt,idx)=>{
+        const div = document.createElement('div'); div.className='option'; div.textContent = opt; div.tabIndex=0;
+        div.addEventListener('click',()=>{
+          if(div.classList.contains('disabled')) return;
+          // highlight selection
+          optionsWrap.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+          div.classList.add('selected'); selected = idx; selectedInfo.textContent = opt; nextBtn.disabled = false;
+        });
+        optionsWrap.appendChild(div);
+      });
+      updateProgress();
+      // start timer
+      startTimer(levelTimers[currentLevel]);
+    }
+
+    function updateProgress(){
+      const percent = Math.round((qIndex/currentSet.length)*100);
+      progressBar.style.width = percent+'%';
+    }
+
+    function startTimer(seconds){
+      clearTimer(); timeLeft = seconds; timerEl.textContent = `${timeLeft}s`;
+      timerInterval = setInterval(()=>{
+        timeLeft--; if(timeLeft<=0){ clearTimer(); timerEl.textContent='0s'; // auto-skip/submit
+          // treat as timeout: evaluate as incorrect and move on
+          checkAndMark(null); qIndex++; if(qIndex>=currentSet.length) finishLevel(); else renderQuestion();
+        } else timerEl.textContent = `${timeLeft}s`; },1000);
+    }
+    function clearTimer(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
+
+    function finishLevel(){
+      clearTimer();
+      // show results
+      endCard.style.display='block';
+      finalScore.textContent = score; finalTotal.textContent = currentSet.length;
+      const percent = Math.round((score/currentSet.length)*100); finalPercent.textContent = percent;
+      // check pass and unlock next if passed
+      if(percent >= PASS_PERCENT){
+        nextLevelBtn.style.display='inline-block'; retryBtn.style.display='inline-block'; saveScoreBtn.style.display='inline-block';
+      } else {
+        nextLevelBtn.style.display='none'; retryBtn.style.display='inline-block'; saveScoreBtn.style.display='inline-block';
+      }
+      // lock/unlock levels according to stored progress
+      saveProgress(percent);
+      applyUnlocks();
+    }
+
+    // persist progress per subject in localStorage
+    function saveProgress(percent){
+      const key = `quiz_progress_${currentQuizId}`;
+      const raw = localStorage.getItem(key); let obj = raw?JSON.parse(raw):{best:0,levels:{}};
+      if(percent>obj.best) obj.best=percent; obj.levels[currentLevel]=Math.max(obj.levels[currentLevel]||0, percent);
+      localStorage.setItem(key, JSON.stringify(obj));
+    }
+
+    function getProgress(){
+      const key = `quiz_progress_${currentQuizId}`; const raw = localStorage.getItem(key); return raw?JSON.parse(raw):{best:0,levels:{}};
+    }
+
+    function applyUnlocks(){
+      // beginner always unlocked
+      const progress = getProgress();
+      levelBtns.forEach(btn=>{
+        const lvl = btn.dataset.level;
+        btn.classList.remove('locked');
+        if(lvl==='beginner') btn.classList.remove('locked');
+        else if(lvl==='intermediate'){
+          // unlocked if beginner progress >= PASS_PERCENT
+          const p = progress.levels['beginner']||0; if(p>=PASS_PERCENT) btn.classList.remove('locked'); else btn.classList.add('locked');
+        } else if(lvl==='advanced'){
+          const p = progress.levels['intermediate']||0; if(p>=PASS_PERCENT) btn.classList.remove('locked'); else btn.classList.add('locked');
+        }
+      });
+    }
+
+    // initialize
+    function init(){
+      applyUnlocks(); startLevel(); renderLeaderboard();
+    }
+
+    // small fixes: startLevel defined here to avoid hoisting issues
+    function startLevel(){
+      currentSet = rawQuizzes[currentQuizId][currentLevel].map(q=>Object.assign({},q));
+      currentSet = shuffle(currentSet);
+      qIndex = 0; selected = null; score = 0;
+      qTotalEl.textContent = currentSet.length;
+      qIndexEl.textContent = 1; scoreDisplay.textContent = 0; progressBar.style.width='0%';
+      updateHeader(); renderQuestion(); endCard.style.display='none';
+    }
+
+    function updateHeader(){
+      title.textContent = `${rawQuizzes[currentQuizId].name} — ${capitalize(currentLevel)}`;
+      qSubject.textContent = rawQuizzes[currentQuizId].name;
+      difficulty.textContent = capitalize(currentLevel);
+      document.querySelectorAll('.subject-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.id===currentQuizId));
+      levelBtns.forEach(btn=>btn.classList.toggle('active', btn.dataset.level===currentLevel));
+      document.getElementById('levelStatus').textContent = document.querySelector(`.level-btn[ data-level="${currentLevel}"]`)?.classList.contains('locked') ? 'Locked' : 'Unlocked';
+    }
+
+    // kick off
+    init();
+  </script>
+</body>
+</html>

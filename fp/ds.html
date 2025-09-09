@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DS & Privacy — Explore</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#4f46e5;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071027 0%, #021026 100%);color:#e6eef8}
+    header{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:white}
+    nav{display:flex;gap:12px}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;cursor:pointer}
+    .container{display:grid;grid-template-columns:320px 1fr;gap:22px;padding:28px}
+    .sidebar{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px;min-height:60vh}
+    .search{display:flex;margin-bottom:12px}
+    input[type=text]{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .modules{margin-top:8px}
+    .module{padding:10px;border-radius:8px;margin-bottom:8px;cursor:pointer}
+    .module:hover{background:rgba(255,255,255,0.02)}
+    main{padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;min-height:60vh}
+    h1,h2,h3{color:#e6f0ff}
+    .toc{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+    .card{background:var(--card);padding:16px;border-radius:10px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.02)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+    .actions{display:flex;gap:8px}
+    .accordion{margin-top:8px}
+    .acc-item{border-radius:8px;overflow:hidden;margin-bottom:8px}
+    .acc-header{padding:12px;background:rgba(255,255,255,0.01);cursor:pointer}
+    .acc-body{padding:12px;display:none;background:rgba(255,255,255,0.02)}
+    footer{padding:18px;text-align:center;color:var(--muted)}
+    .badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px}
+    pre{white-space:pre-wrap}
+    @media(max-width:880px){.container{grid-template-columns:1fr;}.sidebar{order:2}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">DS</div>
+      <div>
+        <div style="font-weight:700">DS & Privacy Explorer</div>
+        <div style="font-size:12px;color:var(--muted)">Detailed content imported from user file</div>
+      </div>
+    </div>
+    <nav>
+      <button class="btn" onclick="printPage()">Print</button>
+      <button class="btn" onclick="downloadHTML()">Download HTML</button>
+      <button class="btn" id="openExplore">Explore</button>
+    </nav>
+  </header>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="search">
+        <input id="searchBox" type="text" placeholder="Search section or keyword..." oninput="searchSections()" />
+      </div>
+      <div class="modules">
+        <div class="module" onclick="goTo('intro')">Introduction</div>
+        <div class="module" onclick="goTo('what')">What is a Data Structure?</div>
+        <div class="module" onclick="goTo('role')">Role of Data Structures in Privacy</div>
+        <div class="module" onclick="goTo('tree')">Tree Data Structure</div>
+        <div class="module" onclick="goTo('graph')">Graph Data Structure</div>
+        <div class="module" onclick="goTo('hash')">Hash Table Data Structure</div>
+        <div class="module" onclick="goTo('organization')">Data Structure Secure Organization</div>
+        <div class="module" onclick="goTo('prevent')">Preventing Compromise</div>
+        <div class="module" onclick="goTo('conclude')">Conclusion</div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--muted)">
+        Tip: Use the "Explore" button in the header to open the interactive Explore page.
+      </div>
+    </aside>
+    <main id="content">
+      <!-- Introduction -->
+      <section id="intro" class="card">
+        <h1>1. Introduction</h1>
+        <p>Data is a vital component of any computer system. How we organize, store, and manage this data has an impact on the applications' usability, security and efficiency.</p>
+        <p>A data structure provides us with structured means of organizing data to aid in the actual processing and use of data.</p>
+        <p>At the same time, privacy is an important topic in the computing environment. Privacy ensures that sensitive information we manage in our systems is not accessed or used unexpectedly or illegitimately. When we consider data structures as a means of protecting privacy we can use them to develop systems that are efficient to use while being assured that the data is secure and will behave in a publishable manner.</p>
+      </section>
+
+      <!-- What is a Data Structure -->
+      <section id="what" class="card">
+        <h2>2. What is a Data Structure?</h2>
+        <p><strong>Definition:</strong> A data structure is an organized way of storing, organizing and managing data in a computer that optimizes efficiency.</p>
+        <h3>Objectives of Data Structures:</h3>
+        <ol>
+          <li><strong>Efficient Data Management</strong> - The goal of a data structure is to help organize data to ease the process of storing, possibly manipulating and retrieving that data.</li>
+          <li><strong>Memory Efficiency</strong> - Some data structures will reduce the amount of wasted memory from how the data organized, which will also result in performance gains.</li>
+          <li><strong>Support Algorithms</strong> - Examples exist where an algorithm requires a specific data structure to perform effectively.</li>
+        </ol>
+        <h3>Examples of Common Data Structures</h3>
+        <p><strong>Linear Structures:</strong> Array, Linked List, Stack, Queue</p>
+        <p><strong>Non-linear Structures:</strong> Tree, Graph, Hash table</p>
+        <h3>Importance</h3>
+        <p>Without the use of a proper data structure, many applications will struggle to operate efficiently. In large use cases (e.g., a user in a database with millions of other entries in it) it is nearly impossible to locate the needed information if the data is not organized in a data structure.</p>
+      </section>
+
+      <!-- Role -->
+      <section id="role" class="card">
+        <h2>3. The Role of Data Structures in Privacy</h2>
+        <h3>Online Safety</h3>
+        <p>Online safety means protecting sensitive information (password, financial information, personal information) that can fall into abusive hands.</p>
+        <h3>Data Structures are Critical enablers</h3>
+        <ul>
+          <li>Data is organized so security can restrict access.</li>
+          <li>Data structure can act as an enabler for secure tasks, such as encrypting sensitive data and validating data integrity.</li>
+          <li>Data structures can lock out the chance for access and to tamper or abuse consequently resulting in privacy violation.</li>
+        </ul>
+        <h3>Example</h3>
+        <p>A bank uses a hash table to store passwords as hashed values. Regardless of the database being extracted by an unauthorized individual, unless they have a way to decrypt the hashed password bundled with additional knowledge of a tactic (social engineering), they will not know the password at all.</p>
+      </section>
+
+      <!-- Tree -->
+      <section id="tree" class="card">
+        <h2>4. Tree Data Structure</h2>
+        <p><strong>Definition:</strong></p>
+        <p>A tree is a data structure that consists of a root node, followed by connected edges, creating overall a hierarchy of node relationships.</p>
+        <h3>Trees have following characteristics:</h3>
+        <ul>
+          <li>The top node is referred to as the root.</li>
+          <li>The nodes beneath the root are known as child nodes and the nodes above are known as parent nodes.</li>
+          <li>Each parent node can have multiple child nodes than the query, however trees can collectively have multiple hierarchy levels. The exception is binary trees, which each parent node has maximum of two child nodes joined as edges.</li>
+        </ul>
+        <h3>How trees enable privacy:</h3>
+        <ol>
+          <li><strong>Access Control Trees:</strong> Access privileges are assigned to a parent node, which is inherited by child nodes. For example, a private folder as a parent node would inherit private folders and files that child nodes can have.</li>
+          <li><strong>Merkle Trees:</strong> Each node contains a hash of its child nodes. If the final leaf node of a Merkle tree is changed, it would change the hash at the root node immediately identifying that tampering detected.</li>
+        </ol>
+        <h3>Outcomes</h3>
+        <ul>
+          <li>File Systems - an example of programs where trees organize folders and files in a hierarchy.</li>
+          <li>Blockchain - verifies that transactional integrity has not been compromised through a data structure.</li>
+          <li>Version Control Systems – Keeping track of changes across many files.</li>
+      </section>
+
+      <!-- Graph -->
+      <section id="graph" class="card">
+        <h2>5. Graph Data Structure</h2>
+        <p><strong>Definition:</strong></p>
+        <p>A graph is a structure of vertices (or nodes) and edges (or links) between vertexes/nodes.</p>
+        <h3>Characteristics of Graphs:</h3>
+        <ul>
+          <li>There can be directed edges (you have a direction from one vertex/node to another vertex/node) or there can be undirected edges (edges do not have a direction).</li>
+          <li>Edges may or may not have weights, which could indicate cost, distance or some capacity.</li>
+          <li>Graphs model relationship(s) between some things.</li>
+        </ul>
+        <h3>How graphs can secure data:</h3>
+        <ul>
+          <li><strong>Network Modeling:</strong> The graph models users, devices and their access to resources.</li>
+          <li><strong>Anomaly Detection:</strong> You can study the graph for some anomaly or unusual behavior (like a user accessing inappropriate or unauthorized resources).</li>
+          <li><strong>Access Control Design:</strong> Graphs use credentials from the subject/user to control who connects to what.</li>
+        </ul>
+        <h3>Applications for Graphs:</h3>
+        <ul>
+          <li>Social connections through social media (friend networks)</li>
+          <li>Network security (unidirectional or bidirectional data flow) or by monitoring data flow.</li>
+          <li>Access control of corporate networks.</li>
+        </ul>
+      </section>
+
+      <!-- Hash Table -->
+      <section id="hash" class="card">
+        <h2>6. Hash Table Data Structure</h2>
+        <p><strong>Definition:</strong> A hash table is a key-value data structure that uses a hash function to store data in a key-value pair.</p>
+        <h3>Characteristics of Hash Tables:</h3>
+        <ul>
+          <li>Gives access to data fast using a key.</li>
+          <li>Values can be stored as hashes not as plain text.</li>
+          <li>Hashes can categorize items or keys that hash to the same value (collision) by an approach called chaining.</li>
+        </ul>
+        <h3>How hash tables can secure data:</h3>
+        <ol>
+          <li><strong>Passwords stored securely:</strong> original passwords will not be stored as hashes by unauthorized users to read.</li>
+          <li><strong>Checking data integrity</strong> - Hashes and checksums indicate data has not been tampered with.</li>
+          <li><strong>Authentication is fast.</strong></li>
+        </ol>
+        <h3>Applications</h3>
+        <ul>
+          <li>Logins (where passwords are stored in a hash table)</li>
+          <li>Digital signatures</li>
+          <li>Web app session management</li>
+        </ul>
+      </section>
+
+      <!-- Organization Table -->
+      <section id="organization" class="card">
+        <h2>7. Data Structure Secure Data Organization</h2>
+        <table>
+          <thead>
+            <tr><th>Data Structure</th><th>Organization method</th><th>Security role</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tree</td><td>Hierarchical Nodes</td><td>Access control, integrity verification (ie. Merkle trees)</td></tr>
+            <tr><td>Graph</td><td>Nodes and Edges</td><td>Relationship monitoring, suspicious activity detection</td></tr>
+            <tr><td>Hash Table</td><td>Key Value Storage</td><td>Ensure confidentiality</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:10px">Summary: Trees, graphs, and hash tables help us structure, control and secure data. They help prevent unauthorized access, detect anomalous behavior and ensure confidentiality of our data.</p>
+      </section>
+
+      <!-- Preventing Compromise -->
+      <section id="prevent" class="card">
+        <h2>8. Data Structures Preventing Compromise</h2>
+        <ol>
+          <li><strong>Trees</strong> -If one byte in a tree is modified, the parent/root hash changes leading to a security compromise. We can also limit access permissions to only authorized browsed.</li>
+          <li><strong>Graphs</strong> -Relationship mapping between nodes (particular users, cli operations) allows user behviour to be examined too identify unusual behaviour, abnomral connections and patterns. We can thus protect against intrusion attacks, and loss of privilege attacks, as well as leaks from unauthorised access.</li>
+          <li><strong>Hash Tables</strong> -All sensitive data is pushed in as hashes so the data itself is never fully revealed. As hashes are very fast - we can quickly detect if any of the data has been manipulated / tampered. URL's appear as links of hid => our sensitive information is hidden and secure.</li>
+        </ol>
+      </section>
+
+      <!-- Conclusion -->
+      <section id="conclude" class="card">
+        <h2>9. Conclusion</h2>
+        <p>Data Structures = Efficient data organization</p>
+        <p>Tree = Hierarchy + integrity check</p>
+        <p>Graph = Relationship mapping + anomaly detection</p>
+        <p>Hash Table = Key-Value storage + confidentiality</p>
+        <h3>Combined Roles:</h3>
+        <p>Trees, graphs, and hash tables provide privacy and secure organization of data, as well as further prevention against breaches and exploitation of data. Their combined role represents the data structure methods of modern secure computing systems.</p>
+      </section>
+
+      <!-- Explore page (SPA) -->
+      <section id="explorePage" class="card" style="display:none">
+        <h2>Explore — Interactive View</h2>
+        <p>This interactive area is an "Explore" page. Use the quick actions below to interact with the content.</p>
+        <div class="actions" style="margin-bottom:12px">
+          <button class="btn" onclick="toggleAll('open')">Expand all</button>
+          <button class="btn" onclick="toggleAll('close')">Collapse all</button>
+          <button class="btn" onclick="highlight('tree')">Highlight Trees</button>
+          <button class="btn" onclick="highlight('graph')">Highlight Graphs</button>
+          <button class="btn" onclick="highlight('hash')">Highlight Hash Tables</button>
+        </div>
+
+        <div class="accordion" id="exploreAcc">
+          <div class="acc-item">
+            <div class="acc-header">Introduction (click)</div>
+            <div class="acc-body">See the Introduction section for full details about data and privacy.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header">Trees (click)</div>
+            <div class="acc-body">Trees form hierarchical models used in file systems, Merkle trees in blockchains, and access control inheritance.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header">Graphs (click)</div>
+            <div class="acc-body">Graphs model relationships and are useful in network security and anomaly detection.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header">Hash Tables (click)</div>
+            <div class="acc-body">Hash tables support fast lookups, secure password storage, and checksums for integrity.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+  <footer>Built from the uploaded WordPad document. Use search or the modules to navigate the full content.</footer>
+
+  <script>
+    // Navigation helpers
+    function goTo(id){document.querySelectorAll('main section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+    // Initialize: show intro
+    document.addEventListener('DOMContentLoaded',()=>{goTo('intro');setupAccordion();});
+
+    // Search
+    function searchSections(){const q=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('main section').forEach(s=>{const text=s.innerText.toLowerCase();s.style.display = q === '' ? (s.id==='intro'? 'block':'none') : (text.includes(q)?'block':'none');});}
+
+    // Print & Download
+    function printPage(){window.print();}
+    function downloadHTML(){const blob=new Blob([document.documentElement.outerHTML],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='TOC_and_Privacy_explore.html';a.click();}
+
+    // Explore button toggles
+    document.getElementById('openExplore').addEventListener('click',()=>{document.querySelectorAll('main section').forEach(s=>s.style.display='none');document.getElementById('explorePage').style.display='block';window.scrollTo({top:0,behavior:'smooth'});});
+
+    // Accordion
+    function setupAccordion(){document.querySelectorAll('.acc-item .acc-header').forEach(h=>{h.addEventListener('click',()=>{const body=h.nextElementSibling;body.style.display=body.style.display==='block'?'none':'block';});});}
+    function toggleAll(op){document.querySelectorAll('.acc-body').forEach(b=>b.style.display= op==='open'?'block':'none');}
+    function highlight(key){const map={'tree':'#tree','graph':'#graph','hash':'#hash'};document.querySelectorAll('main section').forEach(s=>s.style.border='none');const el=document.querySelector(map[key]);if(el){el.style.border='2px solid rgba(79,70,229,0.6)';el.scrollIntoView({behavior:'smooth',block:'center'});} }
+  </script>
+</body>
+</html>
